@@ -135,44 +135,63 @@ body {
 
 /* ---- Rodeo ticket-stub button ---- */
 .ticket {
+	/* Punched notches (mid-left/right) + corner nicks, intersected into one mask */
+	--punch:
+		radial-gradient(circle 0.58em at 0 50%, transparent 97%, #000 100%),
+		radial-gradient(circle 0.58em at 100% 50%, transparent 97%, #000 100%),
+		radial-gradient(circle 0.24em at 0 0, transparent 97%, #000 100%),
+		radial-gradient(circle 0.24em at 100% 0, transparent 97%, #000 100%),
+		radial-gradient(circle 0.24em at 0 100%, transparent 97%, #000 100%),
+		radial-gradient(circle 0.24em at 100% 100%, transparent 97%, #000 100%);
 	position: relative;
 	display: inline-block;
-	background: var(--color-coral);
+	padding: 0.85em 2.2em;
+	background:
+		/* paper sheen */
+		linear-gradient(to bottom, rgb(255 255 255 / 0.16), transparent 45%, rgb(0 0 0 / 0.1)),
+		var(--color-coral);
 	color: var(--color-night-deep);
 	font-family: var(--font-display);
 	letter-spacing: 0.05em;
-	padding: 0.85em 2.2em;
-	border: 2px dashed var(--color-night-deep);
-	outline: 3px solid var(--color-coral);
+	transform: rotate(-1deg);
+	will-change: transform; /* rasterize masked layer once — kills hairline bbox artifact */
+	-webkit-mask-image: var(--punch);
+	-webkit-mask-composite: destination-in;
+	mask-image: var(--punch);
+	mask-composite: intersect;
+	/* filter (not box-shadow) so shadows follow the punched silhouette */
+	filter:
+		drop-shadow(0 3px 0 color-mix(in srgb, var(--color-coral), black 40%))
+		drop-shadow(0 10px 20px rgb(0 0 0 / 0.35));
 	transition:
 		transform 0.15s ease,
-		background 0.15s ease;
+		background-color 0.15s ease,
+		filter 0.15s ease;
 }
-.ticket:hover {
-	background: var(--color-ember);
-	outline-color: var(--color-ember);
-	transform: translateY(-2px) rotate(-0.5deg);
-}
-.ticket:active {
-	transform: translateY(0);
-}
-/* Perforation notches */
-.ticket::before,
-.ticket::after {
+/* Inner printed frame */
+.ticket::before {
 	content: '';
 	position: absolute;
-	top: 50%;
-	width: 14px;
-	height: 14px;
-	border-radius: 9999px;
-	background: var(--color-night);
-	transform: translateY(-50%);
+	inset: 5px;
+	border: 2px dashed color-mix(in srgb, var(--color-night-deep) 55%, transparent);
+	pointer-events: none;
 }
-.ticket::before {
-	left: -8px;
+.ticket:hover {
+	background-color: var(--color-ember);
+	transform: translateY(-2px) rotate(0deg);
+	filter:
+		drop-shadow(0 5px 0 color-mix(in srgb, var(--color-ember), black 40%))
+		drop-shadow(0 16px 28px rgb(0 0 0 / 0.4));
 }
-.ticket::after {
-	right: -8px;
+.ticket:active {
+	transform: translateY(0) rotate(0deg);
+}
+.ticket:focus-visible {
+	filter:
+		drop-shadow(0 3px 0 color-mix(in srgb, var(--color-coral), black 40%))
+		drop-shadow(0 10px 20px rgb(0 0 0 / 0.35))
+		drop-shadow(0 0 6px var(--color-starlight));
+	outline: none;
 }
 
 /* ---- Marquee ---- */
