@@ -1,0 +1,109 @@
+---
+import { site } from '../site';
+import Scissors from './Scissors.astro';
+---
+
+<section
+	id="top"
+	class="grain relative flex min-h-svh flex-col items-center justify-center overflow-hidden"
+>
+	<!-- Backdrop: the textless brand sky -->
+	<img
+		src="/sky.jpg"
+		alt=""
+		aria-hidden="true"
+		class="absolute inset-0 h-full w-full object-cover object-[center_70%]"
+	/>
+	<!-- Ember glow rising from the bottom -->
+	<div
+		class="absolute inset-0 bg-gradient-to-t from-ember/40 via-night/40 to-transparent"
+		aria-hidden="true"
+	>
+	</div>
+	<div
+		class="absolute inset-0 bg-gradient-to-b from-night/60 via-transparent to-night"
+		aria-hidden="true"
+	>
+	</div>
+
+	<!-- Twinkling stars + shooting star (populated by script) -->
+	<div id="starfield" class="absolute inset-0" aria-hidden="true"></div>
+	<div id="shooter" class="shooting-star" style="top: 18%; right: 20%;" aria-hidden="true"></div>
+
+	<div class="relative z-10 flex flex-col items-center px-6 text-center">
+		<p
+			class="reveal flex items-center gap-2 font-mono text-xs uppercase tracking-[0.35em] text-blush sm:text-sm"
+		>
+			<Scissors class="size-4 text-coral" /> Barber
+		</p>
+		<h1
+			class="reveal mt-4 font-display text-7xl leading-[0.95] text-coral drop-shadow-[0_4px_24px_rgba(224,101,95,0.35)] sm:text-8xl md:text-9xl"
+		>
+			Faded<br />Jim
+		</h1>
+		<p
+			class="reveal mt-6 max-w-md text-lg font-light text-starlight/90 sm:text-xl"
+		>
+			Fresh fades under the evening sky. <span class="text-coral">Tell your friends.</span>
+		</p>
+		<div class="reveal mt-10 flex flex-col items-center gap-4 sm:flex-row">
+			<a href={site.bookingUrl} class="ticket text-xl">Book Now</a>
+			<a
+				href="#cuts"
+				class="font-mono text-xs uppercase tracking-[0.25em] text-starlight/80 underline decoration-coral/60 underline-offset-8 transition-colors hover:text-coral"
+			>
+				See the cuts ↓
+			</a>
+		</div>
+		<a
+			href={site.instagram.url}
+			class="reveal mt-8 font-mono text-xs tracking-[0.2em] text-starlight/60 transition-colors hover:text-coral"
+		>
+			{site.instagram.handle}
+		</a>
+	</div>
+
+	<!-- Scroll hint -->
+	<div
+		class="absolute bottom-6 left-1/2 -translate-x-1/2 animate-bounce font-mono text-starlight/50"
+		aria-hidden="true"
+	>
+		↓
+	</div>
+</section>
+
+<script>
+	const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+	// Twinkling stars
+	const field = document.getElementById('starfield');
+	if (field && !prefersReduced) {
+		const count = window.innerWidth < 640 ? 40 : 80;
+		for (let i = 0; i < count; i++) {
+			const star = document.createElement('span');
+			const size = Math.random() * 2.5 + 1;
+			star.className = 'star';
+			star.style.width = `${size}px`;
+			star.style.height = `${size}px`;
+			star.style.left = `${Math.random() * 100}%`;
+			star.style.top = `${Math.random() * 100}%`;
+			star.style.setProperty('--tw-duration', `${2 + Math.random() * 4}s`);
+			star.style.setProperty('--tw-delay', `${Math.random() * 4}s`);
+			field.appendChild(star);
+		}
+	}
+
+	// Occasional shooting star
+	const shooter = document.getElementById('shooter');
+	if (shooter && !prefersReduced) {
+		const fire = () => {
+			shooter.style.top = `${5 + Math.random() * 30}%`;
+			shooter.style.right = `${Math.random() * 40}%`;
+			shooter.classList.remove('fire');
+			void shooter.offsetWidth; // restart animation
+			shooter.classList.add('fire');
+		};
+		fire();
+		setInterval(fire, 7000);
+	}
+</script>

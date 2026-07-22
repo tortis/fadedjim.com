@@ -1,0 +1,44 @@
+---
+import { site } from '../site';
+
+// Placeholder hours — confirm Jim's real schedule
+const hours = [
+	{ days: 'Mon — Fri', time: '9:00a — 6:00p' },
+	{ days: 'Saturday', time: '9:00a — 2:00p' },
+	{ days: 'Sunday', time: 'Closed' },
+];
+---
+
+<section id="hours" class="mx-auto max-w-3xl scroll-mt-24 px-5 py-20 sm:py-28">
+	<div class="reveal border-2 border-dashed border-coral/50 bg-night-deep/60 p-8 sm:p-12">
+		<p class="font-mono text-xs uppercase tracking-[0.35em] text-coral">Schedule</p>
+		<h2 class="mt-3 font-display text-4xl text-starlight sm:text-5xl">Hours</h2>
+
+		<dl class="mt-8 divide-y divide-starlight/10">
+			{
+				hours.map((row) => (
+					<div class="flex items-baseline justify-between gap-4 py-4">
+						<dt class="font-mono text-sm tracking-[0.15em] text-starlight/80 uppercase">
+							{row.days}
+						</dt>
+						<dd
+							class={`font-mono text-sm tracking-wider ${row.time === 'Closed' ? 'text-starlight/40 line-through' : 'text-blush'}`}
+						>
+							{row.time}
+						</dd>
+					</div>
+				))
+			}
+		</dl>
+
+		<p class="mt-6 font-mono text-xs leading-relaxed text-starlight/60">
+			Appointment only. Walk-ins when the chair’s free — but why risk it?
+		</p>
+		<a
+			href={site.bookingUrl}
+			class="mt-6 inline-block font-mono text-sm tracking-[0.2em] text-coral uppercase underline decoration-coral/40 underline-offset-8 transition-colors hover:text-blush"
+		>
+			Book a slot →
+		</a>
+	</div>
+</section>

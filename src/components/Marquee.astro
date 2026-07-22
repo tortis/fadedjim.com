@@ -1,0 +1,25 @@
+---
+import Scissors from './Scissors.astro';
+
+const phrase = 'Tell your friends';
+const repeats = 6;
+---
+
+<div
+	class="relative overflow-hidden border-y-2 border-dashed border-coral/40 bg-night-deep py-4"
+	aria-hidden="true"
+>
+	<div class="marquee-track">
+		{
+			[...Array(2)].map(() => (
+				<div class="flex shrink-0 items-center">
+					{[...Array(repeats)].map(() => (
+						<span class="mx-6 flex items-center gap-6 font-display text-2xl whitespace-nowrap text-coral sm:text-3xl">
+							{phrase} <Scissors class="size-5 text-blush" />
+						</span>
+					))}
+				</div>
+			))
+		}
+	</div>
+</div>

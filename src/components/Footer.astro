@@ -1,0 +1,36 @@
+---
+import { site } from '../site';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="grain relative overflow-hidden">
+	<!-- Ember horizon from the brand sky -->
+	<img
+		src="/sky.jpg"
+		alt=""
+		aria-hidden="true"
+		class="absolute inset-0 h-full w-full object-cover object-bottom"
+	/>
+	<div
+		class="absolute inset-0 bg-gradient-to-b from-night via-night/60 to-transparent"
+		aria-hidden="true"
+	>
+	</div>
+
+	<div class="relative z-10 mx-auto flex max-w-4xl flex-col items-center px-6 pt-24 pb-10 text-center sm:pt-32">
+		<h2 class="reveal font-display text-6xl text-coral drop-shadow-[0_4px_24px_rgba(0,0,0,0.5)] sm:text-7xl">
+			Tell your<br />friends
+		</h2>
+		<a href={site.bookingUrl} class="ticket reveal mt-10 text-2xl">Book Now</a>
+		<a
+			href={site.instagram.url}
+			class="reveal mt-8 font-mono text-xs tracking-[0.25em] text-starlight/80 uppercase underline decoration-coral/50 underline-offset-8 transition-colors hover:text-night-deep"
+		>
+			Instagram {site.instagram.handle}
+		</a>
+		<p class="mt-16 font-mono text-[10px] tracking-[0.3em] text-starlight/50 uppercase">
+			© {year} Faded Jim — All rights reserved
+		</p>
+	</div>
+</footer>

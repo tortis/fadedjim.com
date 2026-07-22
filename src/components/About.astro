@@ -1,0 +1,45 @@
+---
+import { site } from '../site';
+---
+
+<section id="about" class="mx-auto max-w-6xl scroll-mt-24 px-5 py-20 sm:py-28">
+	<div class="grid items-center gap-12 md:grid-cols-2">
+		<!-- Portrait placeholder — swap for a photo of Jim -->
+		<div class="reveal polaroid relative mx-auto w-full max-w-sm -rotate-2 border-8 border-starlight bg-starlight shadow-xl">
+			<div class="flex aspect-[4/5] flex-col items-center justify-center gap-3 bg-gradient-to-br from-dusk-light via-dusk to-night">
+				<span class="font-display text-6xl text-coral">J</span>
+				<span class="font-mono text-[10px] uppercase tracking-[0.3em] text-starlight/50">
+					Portrait
+				</span>
+			</div>
+			<p class="bg-starlight py-3 text-center font-mono text-xs uppercase tracking-[0.2em] text-night">
+				The man himself
+			</p>
+		</div>
+
+		<div class="reveal">
+			<p class="font-mono text-xs uppercase tracking-[0.35em] text-coral">About</p>
+			<h2 class="mt-3 font-display text-5xl text-starlight sm:text-6xl">
+				Meet Jim
+			</h2>
+			<!-- Placeholder bio — replace with Jim's real story -->
+			<p class="mt-6 leading-relaxed font-light text-starlight/85">
+				Hey, I’m Jim — barber, fade enthusiast, and firm believer that a great
+				haircut can change your whole week. I take pride in clean lines, sharp
+				fades, and making sure you leave the chair feeling better than when you
+				sat down.
+			</p>
+			<p class="mt-4 leading-relaxed font-light text-starlight/85">
+				Every cut is by appointment, so you’ve got my full attention — no
+				waiting around, no rushing. Just good conversation and a cut you’ll
+				want to show off.
+			</p>
+			<a
+				href={site.instagram.url}
+				class="mt-6 inline-block font-mono text-xs uppercase tracking-[0.25em] text-coral underline decoration-coral/40 underline-offset-8 transition-colors hover:text-blush"
+			>
+				Follow the work on Instagram →
+			</a>
+		</div>
+	</div>
+</section>

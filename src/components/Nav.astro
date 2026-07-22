@@ -1,0 +1,51 @@
+---
+import { site } from '../site';
+
+const links = [
+	{ href: '#cuts', label: 'Cuts' },
+	{ href: '#about', label: 'About' },
+	{ href: '#hours', label: 'Hours' },
+	{ href: '#reviews', label: 'Reviews' },
+];
+---
+
+<header
+	id="site-nav"
+	class="fixed inset-x-0 top-0 z-40 transition-colors duration-300"
+>
+	<nav class="mx-auto flex max-w-6xl items-center justify-between px-5 py-4">
+		<a
+			href="#top"
+			class="font-display text-2xl tracking-wide text-starlight drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)]"
+		>
+			Faded <span class="text-coral">Jim</span>
+		</a>
+		<div class="hidden items-center gap-6 md:flex">
+			{
+				links.map((link) => (
+					<a
+						href={link.href}
+						class="font-mono text-xs uppercase tracking-[0.2em] text-starlight/80 transition-colors hover:text-coral"
+					>
+						{link.label}
+					</a>
+				))
+			}
+		</div>
+		<a href={site.bookingUrl} class="ticket !py-2 !px-5 text-sm">Book Now</a>
+	</nav>
+</header>
+
+<script>
+	const nav = document.getElementById('site-nav');
+	const onScroll = () => {
+		if (!nav) return;
+		if (window.scrollY > 40) {
+			nav.classList.add('bg-night-deep/90', 'backdrop-blur', 'shadow-lg');
+		} else {
+			nav.classList.remove('bg-night-deep/90', 'backdrop-blur', 'shadow-lg');
+		}
+	};
+	onScroll();
+	window.addEventListener('scroll', onScroll, { passive: true });
+</script>

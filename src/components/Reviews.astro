@@ -1,0 +1,59 @@
+---
+// Placeholder reviews — swap for real Google reviews
+const reviews = [
+	{
+		quote:
+			'Best fade I’ve ever had. Jim takes his time and gets every detail right. I won’t go anywhere else.',
+		name: 'Marcus T.',
+		rotate: 'md:-rotate-1',
+	},
+	{
+		quote:
+			'Easy booking, always on time, and the cut is consistent every single visit. Can’t recommend enough.',
+		name: 'Devon R.',
+		rotate: 'md:rotate-1',
+	},
+	{
+		quote:
+			'Took my son for his first real haircut and Jim made it an experience. We’re customers for life.',
+		name: 'Sarah K.',
+		rotate: 'md:-rotate-2',
+	},
+];
+---
+
+<section id="reviews" class="mx-auto max-w-6xl scroll-mt-24 px-5 py-20 sm:py-28">
+	<div class="reveal mb-12 text-center">
+		<p class="font-mono text-xs uppercase tracking-[0.35em] text-coral">
+			Word on the street
+		</p>
+		<h2 class="mt-3 font-display text-5xl text-starlight sm:text-6xl">Reviews</h2>
+		<p class="mt-3 font-mono text-xs text-starlight/50">★★★★★ via Google</p>
+	</div>
+
+	<div class="grid gap-6 md:grid-cols-3">
+		{
+			reviews.map((review) => (
+				<blockquote
+					class={`reveal relative border-t-4 border-coral bg-dusk/40 p-6 pt-8 shadow-lg ${review.rotate}`}
+				>
+					<span
+						class="absolute -top-1 left-4 font-display text-6xl text-coral/40 select-none"
+						aria-hidden="true"
+					>
+						”
+					</span>
+					<p class="relative z-10 leading-relaxed font-light text-starlight/90">
+						{review.quote}
+					</p>
+					<footer class="mt-6">
+						<p class="text-coral" aria-label="5 out of 5 stars">★★★★★</p>
+						<cite class="mt-1 block font-mono text-xs tracking-[0.2em] text-starlight/60 uppercase not-italic">
+							— {review.name}
+						</cite>
+					</footer>
+				</blockquote>
+			))
+		}
+	</div>
+</section>
