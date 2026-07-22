@@ -88,22 +88,30 @@ import Scissors from './Scissors.astro';
 			star.style.left = `${Math.random() * 100}%`;
 			star.style.top = `${Math.random() * 100}%`;
 			star.style.setProperty('--tw-duration', `${2 + Math.random() * 4}s`);
-			star.style.setProperty('--tw-delay', `${Math.random() * 4}s`);
+			// Negative delay: starts each star mid-cycle so the sky looks settled on load
+			star.style.setProperty('--tw-delay', `${-Math.random() * 6}s`);
 			field.appendChild(star);
 		}
 	}
 
-	// Occasional shooting star
+	// Occasional shooting star, alternating between a few flight paths
 	const shooter = document.getElementById('shooter');
 	if (shooter && !prefersReduced) {
+		const paths = ['fire-a', 'fire-b', 'fire-c'];
+		let last = -1;
 		const fire = () => {
+			let i = Math.floor(Math.random() * paths.length);
+			if (i === last) i = (i + 1) % paths.length; // never the same path twice in a row
+			last = i;
 			shooter.style.top = `${5 + Math.random() * 30}%`;
 			shooter.style.right = `${Math.random() * 40}%`;
-			shooter.classList.remove('fire');
+			shooter.classList.remove(...paths);
 			void shooter.offsetWidth; // restart animation
-			shooter.classList.add('fire');
+			shooter.classList.add(paths[i]);
 		};
-		fire();
-		setInterval(fire, 7000);
+		setTimeout(() => {
+			fire();
+			setInterval(fire, 7000);
+		}, 1500);
 	}
 </script>
