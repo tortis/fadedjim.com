@@ -1,10 +1,9 @@
 ---
 import { site } from '../site';
 
-// Placeholder hours — confirm Jim's real schedule
 const hours = [
-	{ days: 'Mon — Fri', time: '9:00a — 6:00p' },
-	{ days: 'Saturday', time: '9:00a — 2:00p' },
+	{ days: 'Monday', time: 'Closed' },
+	{ days: 'Tues — Sat', time: '9:00a — 5:00p' },
 	{ days: 'Sunday', time: 'Closed' },
 ];
 ---
@@ -32,7 +31,7 @@ const hours = [
 		</dl>
 
 		<p class="mt-6 font-mono text-xs leading-relaxed text-starlight/60">
-			Appointment only. Walk-ins when the chair’s free — but why risk it?
+			Appointment only? Walk-ins?
 		</p>
 		<a
 			href={site.bookingUrl}
