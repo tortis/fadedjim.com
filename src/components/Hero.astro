@@ -31,30 +31,17 @@ import Scissors from './Scissors.astro';
 	<div id="shooter" class="shooting-star" style="top: 18%; right: 20%;" aria-hidden="true"></div>
 
 	<div class="relative z-10 flex flex-col items-center px-6 text-center">
-		<p
-			class="reveal flex items-center gap-2 font-mono text-xs uppercase tracking-[0.35em] text-blush sm:text-sm"
-		>
-			<Scissors class="size-4 text-coral" /> Barber
-		</p>
 		<h1
-			class="reveal mt-4 font-display text-7xl leading-[0.95] text-coral drop-shadow-[0_4px_24px_rgba(224,101,95,0.35)] sm:text-8xl md:text-9xl"
+			class="reveal font-display text-7xl leading-[0.95] text-coral drop-shadow-[0_4px_24px_rgba(224,101,95,0.35)] sm:text-8xl md:text-9xl"
 		>
-			Faded<br />Jim
+			Tell Your<br />Friends
 		</h1>
 		<p
-			class="reveal mt-6 max-w-md text-lg font-light text-starlight/90 sm:text-xl"
+			class="reveal mt-6 flex items-center gap-2 font-mono text-xs uppercase tracking-[0.35em] text-blush sm:text-sm"
 		>
-			Fresh fades under the evening sky. <span class="text-coral">Tell your friends.</span>
+			<Scissors class="size-4 text-coral" /> Jim Maguffin - Barber
 		</p>
-		<div class="reveal mt-10 flex flex-col items-center gap-4 sm:flex-row">
-			<a href={site.bookingUrl} class="ticket text-xl">Book Now</a>
-			<a
-				href="#cuts"
-				class="font-mono text-xs uppercase tracking-[0.25em] text-starlight/80 underline decoration-coral/60 underline-offset-8 transition-colors hover:text-coral"
-			>
-				See the cuts ↓
-			</a>
-		</div>
+		<a href={site.bookingUrl} class="ticket reveal mt-10 text-xl">Book Now</a>
 		<a
 			href={site.instagram.url}
 			class="reveal mt-8 font-mono text-xs tracking-[0.2em] text-starlight/60 transition-colors hover:text-coral"
@@ -64,12 +51,13 @@ import Scissors from './Scissors.astro';
 	</div>
 
 	<!-- Scroll hint -->
-	<div
-		class="absolute bottom-6 left-1/2 -translate-x-1/2 animate-bounce font-mono text-starlight/50"
-		aria-hidden="true"
+	<a
+		href="#cuts"
+		class="absolute bottom-6 left-1/2 flex -translate-x-1/2 flex-col items-center gap-1 font-mono text-xs uppercase tracking-[0.25em] text-starlight/50 transition-colors hover:text-coral"
 	>
-		↓
-	</div>
+		See the cuts
+		<span class="animate-bounce" aria-hidden="true">↓</span>
+	</a>
 </section>
 
 <script>

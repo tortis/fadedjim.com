@@ -207,16 +207,17 @@ body {
 }
 
 /* ---- Scroll reveal ---- */
+/* Uses `translate` (not `transform`) so it composes with rotated elements (.ticket, .polaroid) */
 .reveal {
 	opacity: 0;
-	transform: translateY(24px);
+	translate: 0 24px;
 	transition:
 		opacity 0.7s ease,
-		transform 0.7s ease;
+		translate 0.7s ease;
 }
 .reveal.is-visible {
 	opacity: 1;
-	transform: translateY(0);
+	translate: 0 0;
 }
 
 /* ---- Polaroid tilt ---- */
@@ -229,6 +230,24 @@ body {
 	transform: rotate(0deg) scale(1.03) !important;
 	box-shadow: 0 20px 50px -12px rgba(0, 0, 0, 0.6);
 	z-index: 10;
+}
+
+/* Elements combining .reveal with their own transitions need the union,
+   otherwise .reveal's transition list replaces theirs and hovers pop */
+.ticket.reveal {
+	transition:
+		transform 0.15s ease,
+		background-color 0.15s ease,
+		filter 0.15s ease,
+		opacity 0.7s ease,
+		translate 0.7s ease;
+}
+.polaroid.reveal {
+	transition:
+		transform 0.25s ease,
+		box-shadow 0.25s ease,
+		opacity 0.7s ease,
+		translate 0.7s ease;
 }
 
 /* ---- Grain texture over dark sections ---- */
@@ -252,7 +271,7 @@ body {
 	}
 	.reveal {
 		opacity: 1;
-		transform: none;
+		translate: none;
 		transition: none;
 	}
 }
