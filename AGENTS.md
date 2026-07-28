@@ -12,11 +12,12 @@ Note: `pnpm run`/`pnpm build` may fail on a supply-chain "minimum release age" c
 
 ## Project structure
 
-Single-page brand site for a barber. `src/pages/index.astro` composes section components from `src/components/` (Nav, Hero, Marquee, Gallery, BookCTA, About, Hours, Reviews, Footer).
+Single-page brand site for a barber. `src/pages/index.astro` composes section components from `src/components/` (Nav, Hero, Gallery, About, Reviews, Hours, Footer).
 
 - Site-wide values (booking URL, Instagram handle) live in `src/site.ts` — Book Now buttons pull from there.
-- Design tokens (colors/fonts from the bg.jpg brand graphic) and custom utilities (`.ticket`, `.reveal`, `.polaroid`, `.grain`, starfield) live in `src/styles/global.css` (Tailwind v4 `@theme`).
+- Design tokens (colors/fonts from the bg.jpg brand graphic) and custom utilities (`.btn`, `.reveal`, `.polaroid`, `.grain`, starfield) live in `src/styles/global.css` (Tailwind v4 `@theme`).
 - `public/bg.jpg` is the original brand graphic; `public/bg-no-text.png` is a textless variant; `public/sky.jpg` is the web-optimized JPEG derived from it (used as the hero + footer backdrop). Display type is `public/HorndonD.ttf` (loaded via `@font-face` in global.css).
+- Cut photos and Jim's portrait live in `src/assets/` and are rendered via `astro:assets` `<Image>` (auto WebP srcset at build time; sharp is in devDependencies). Add new photos by dropping them there and importing them in the component.
 
 ## Screenshots
 

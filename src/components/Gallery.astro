@@ -1,10 +1,15 @@
 ---
-import Scissors from './Scissors.astro';
+import { Image } from 'astro:assets';
+import cutSidePart from '../assets/cut-side-part.jpg';
+import cutClassicBeard from '../assets/cut-classic-beard.jpg';
+import cutTaper from '../assets/cut-taper.jpg';
+import cutFade from '../assets/cut-fade.jpg';
 
 const cuts = [
-	{ label: 'Skin fade', rotate: 'md:-rotate-2' },
-	{ label: 'Taper + beard', rotate: 'md:rotate-1' },
-	{ label: 'Crop top', rotate: 'md:-rotate-1' },
+	{ src: cutSidePart, label: 'Side part', rotate: 'lg:-rotate-2' },
+	{ src: cutClassicBeard, label: 'Classic cut + beard', rotate: 'lg:rotate-1' },
+	{ src: cutTaper, label: 'Taper', rotate: 'lg:-rotate-1' },
+	{ src: cutFade, label: 'Skin fade', rotate: 'lg:rotate-2' },
 ];
 ---
 
@@ -16,20 +21,22 @@ const cuts = [
 
 	<!-- Mobile: snap carousel / Desktop: tilted grid -->
 	<div
-		class="reveal flex snap-x snap-mandatory gap-6 overflow-x-auto pb-6 md:grid md:grid-cols-3 md:overflow-visible md:pb-0"
+		class="reveal flex snap-x snap-mandatory gap-6 overflow-x-auto pb-6 lg:grid lg:grid-cols-4 lg:overflow-visible lg:pb-0"
 	>
 		{
 			cuts.map((cut) => (
 				<figure
-					class={`polaroid relative w-72 shrink-0 snap-center border-8 border-starlight bg-starlight shadow-xl md:w-auto ${cut.rotate}`}
+					class={`polaroid relative w-72 shrink-0 snap-center border-8 border-starlight bg-starlight shadow-xl lg:w-auto ${cut.rotate}`}
 				>
-					{/* Placeholder — swap for real cut photos */}
-					<div class="flex aspect-[4/5] flex-col items-center justify-center gap-3 bg-gradient-to-br from-dusk via-night to-night-deep">
-						<Scissors class="size-9 text-coral" />
-						<span class="font-mono text-[10px] uppercase tracking-[0.3em] text-starlight/50">
-							Photo
-						</span>
-					</div>
+					<Image
+						src={cut.src}
+						alt={`Haircut by Jim — ${cut.label}`}
+						widths={[300, 600]}
+						sizes="(min-width: 1024px) 270px, 288px"
+						format="webp"
+						quality={80}
+						class="aspect-[4/5] w-full object-cover"
+					/>
 					<figcaption class="bg-starlight py-3 text-center font-mono text-xs uppercase tracking-[0.2em] text-night">
 						{cut.label}
 					</figcaption>
@@ -38,7 +45,7 @@ const cuts = [
 		}
 	</div>
 
-	<p class="reveal mt-4 text-center font-mono text-xs text-starlight/50 md:hidden">
+	<p class="reveal mt-4 text-center font-mono text-xs text-starlight/50 lg:hidden">
 		← swipe →
 	</p>
 </section>

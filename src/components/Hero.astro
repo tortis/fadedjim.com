@@ -41,12 +41,14 @@ import Scissors from './Scissors.astro';
 		>
 			<Scissors class="size-4 text-coral" /> Jim Maguffin - Barber
 		</p>
-		<a href={site.bookingUrl} class="ticket reveal mt-10 text-xl">Book Now</a>
+		<a href={site.bookingUrl} class="btn reveal mt-10 text-xl">Book Now</a>
 		<a
 			href={site.instagram.url}
-			class="reveal mt-8 font-mono text-xs tracking-[0.2em] text-starlight/60 transition-colors hover:text-coral"
+			target="_blank"
+			rel="noopener noreferrer"
+			class="reveal mt-8 inline-flex items-center gap-2 rounded-full border-2 border-coral/70 px-5 py-2 font-mono text-xs uppercase tracking-[0.2em] text-coral transition-colors hover:bg-coral hover:text-night-deep"
 		>
-			{site.instagram.handle}
+			{site.instagram.handle} on Instagram
 		</a>
 	</div>
 

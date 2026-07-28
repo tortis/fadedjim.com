@@ -1,17 +1,21 @@
 ---
+import { Image } from 'astro:assets';
 import { site } from '../site';
+import jimPortrait from '../assets/jim-portrait.jpg';
 ---
 
 <section id="about" class="mx-auto max-w-6xl scroll-mt-24 px-5 py-20 sm:py-28">
 	<div class="grid items-center gap-12 md:grid-cols-2">
-		<!-- Portrait placeholder — swap for a photo of Jim -->
-		<div class="reveal polaroid relative mx-auto w-full max-w-sm -rotate-2 border-8 border-starlight bg-starlight shadow-xl">
-			<div class="flex aspect-[4/5] flex-col items-center justify-center gap-3 bg-gradient-to-br from-dusk-light via-dusk to-night">
-				<span class="font-display text-6xl text-coral">J</span>
-				<span class="font-mono text-[10px] uppercase tracking-[0.3em] text-starlight/50">
-					Portrait
-				</span>
-			</div>
+		<div class="reveal polaroid relative mx-auto w-full max-w-md -rotate-2 border-8 border-starlight bg-starlight shadow-xl">
+			<Image
+				src={jimPortrait}
+				alt="Jim cutting a client's hair at Annex Barber Shop"
+				widths={[450, 900]}
+				sizes="(min-width: 768px) 448px, calc(100vw - 2.5rem)"
+				format="webp"
+				quality={85}
+				class="aspect-[4/3] w-full object-cover"
+			/>
 			<p class="bg-starlight py-3 text-center font-mono text-xs uppercase tracking-[0.2em] text-night">
 				The man himself
 			</p>
@@ -22,19 +26,16 @@ import { site } from '../site';
 			<h2 class="mt-3 font-display text-5xl text-starlight sm:text-6xl">
 				Meet Jim
 			</h2>
-			<!-- Placeholder bio — replace with Jim's real story -->
-
-
-
-
 			<p class="mt-6 leading-relaxed font-light text-starlight/85">
-				Per, V’d Est. Deorum, nibh aequaliter, quo ullo privatus iste m porta lategue sem semper vero omnis vero. P eget risus te fusce iusto, eaque mirum, rem nactus eros hac netus dis uidem ultimum spiral quis quae non aut unde.
+				I'm Jim, I've been cutting hair for ten years and am located at Annex Barber Shop in the Paseo district of Oklahoma City. My chair is a place where people feel comfortable and have a good time while getting the best service possible. I value your time and my own and am always committed to giving you the best cut for you.
 			</p>
 			<p class="mt-4 leading-relaxed font-light text-starlight/85">
-				Error aut id me superstites, ea per’ad aut ad ille apollinis. Ad invidia vacare, ac pectora. Sunt quod consuetudium mus y vel hac’li eius si esse iis.
+				When I'm not cutting you can usually find me reading books or watching movies. Come in and chat with me about Stephen King, Margaret Atwood, or anything horror. Let's be friends — book a cut or a hot towel shave today!
 			</p>
 			<a
 				href={site.instagram.url}
+				target="_blank"
+				rel="noopener noreferrer"
 				class="mt-6 inline-block font-mono text-xs uppercase tracking-[0.25em] text-coral underline decoration-coral/40 underline-offset-8 transition-colors hover:text-blush"
 			>
 				Follow the work on Instagram →

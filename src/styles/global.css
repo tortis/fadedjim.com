@@ -133,81 +133,41 @@ body {
 	}
 }
 
-/* ---- Rodeo ticket-stub button ---- */
-.ticket {
-	/* Punched notches (mid-left/right) + corner nicks, intersected into one mask */
-	--punch:
-		radial-gradient(circle 0.58em at 0 50%, transparent 97%, #000 100%),
-		radial-gradient(circle 0.58em at 100% 50%, transparent 97%, #000 100%),
-		radial-gradient(circle 0.24em at 0 0, transparent 97%, #000 100%),
-		radial-gradient(circle 0.24em at 100% 0, transparent 97%, #000 100%),
-		radial-gradient(circle 0.24em at 0 100%, transparent 97%, #000 100%),
-		radial-gradient(circle 0.24em at 100% 100%, transparent 97%, #000 100%);
+/* ---- Primary booking button ---- */
+.btn {
 	position: relative;
 	display: inline-block;
 	padding: 0.85em 2.2em;
-	background:
-		/* paper sheen */
-		linear-gradient(to bottom, rgb(255 255 255 / 0.16), transparent 45%, rgb(0 0 0 / 0.1)),
-		var(--color-coral);
+	border-radius: 9999px;
+	background-color: var(--color-coral);
 	color: var(--color-night-deep);
 	font-family: var(--font-display);
 	letter-spacing: 0.05em;
-	transform: rotate(-1deg);
-	will-change: transform; /* rasterize masked layer once — kills hairline bbox artifact */
-	-webkit-mask-image: var(--punch);
-	-webkit-mask-composite: destination-in;
-	mask-image: var(--punch);
-	mask-composite: intersect;
-	/* filter (not box-shadow) so shadows follow the punched silhouette */
-	filter:
-		drop-shadow(0 3px 0 color-mix(in srgb, var(--color-coral), black 40%))
-		drop-shadow(0 10px 20px rgb(0 0 0 / 0.35));
+	box-shadow:
+		0 3px 0 color-mix(in srgb, var(--color-coral), black 40%),
+		0 10px 20px rgb(0 0 0 / 0.35);
 	transition:
 		transform 0.15s ease,
 		background-color 0.15s ease,
-		filter 0.15s ease;
+		box-shadow 0.15s ease;
 }
-/* Inner printed frame */
-.ticket::before {
-	content: '';
-	position: absolute;
-	inset: 5px;
-	border: 2px dashed color-mix(in srgb, var(--color-night-deep) 55%, transparent);
-	pointer-events: none;
-}
-.ticket:hover {
+.btn:hover {
 	background-color: var(--color-ember);
-	transform: translateY(-2px) rotate(0deg);
-	filter:
-		drop-shadow(0 5px 0 color-mix(in srgb, var(--color-ember), black 40%))
-		drop-shadow(0 16px 28px rgb(0 0 0 / 0.4));
+	transform: translateY(-2px);
+	box-shadow:
+		0 5px 0 color-mix(in srgb, var(--color-ember), black 40%),
+		0 16px 28px rgb(0 0 0 / 0.4);
 }
-.ticket:active {
-	transform: translateY(0) rotate(0deg);
+.btn:active {
+	transform: translateY(0);
 }
-.ticket:focus-visible {
-	filter:
-		drop-shadow(0 3px 0 color-mix(in srgb, var(--color-coral), black 40%))
-		drop-shadow(0 10px 20px rgb(0 0 0 / 0.35))
-		drop-shadow(0 0 6px var(--color-starlight));
-	outline: none;
-}
-
-/* ---- Marquee ---- */
-.marquee-track {
-	display: flex;
-	width: max-content;
-	animation: marquee 22s linear infinite;
-}
-@keyframes marquee {
-	to {
-		transform: translateX(-50%);
-	}
+.btn:focus-visible {
+	outline: 2px solid var(--color-starlight);
+	outline-offset: 3px;
 }
 
 /* ---- Scroll reveal ---- */
-/* Uses `translate` (not `transform`) so it composes with rotated elements (.ticket, .polaroid) */
+/* Uses `translate` (not `transform`) so it composes with rotated elements (.polaroid) */
 .reveal {
 	opacity: 0;
 	translate: 0 24px;
@@ -234,11 +194,11 @@ body {
 
 /* Elements combining .reveal with their own transitions need the union,
    otherwise .reveal's transition list replaces theirs and hovers pop */
-.ticket.reveal {
+.btn.reveal {
 	transition:
 		transform 0.15s ease,
 		background-color 0.15s ease,
-		filter 0.15s ease,
+		box-shadow 0.15s ease,
 		opacity 0.7s ease,
 		translate 0.7s ease;
 }
@@ -265,7 +225,6 @@ body {
 		scroll-behavior: auto;
 	}
 	.star,
-	.marquee-track,
 	.shooting-star[class*='fire-'] {
 		animation: none;
 	}

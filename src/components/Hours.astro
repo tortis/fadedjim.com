@@ -2,9 +2,9 @@
 import { site } from '../site';
 
 const hours = [
-	{ days: 'Monday', time: 'Closed' },
-	{ days: 'Tues — Sat', time: '9:00a — 5:00p' },
-	{ days: 'Sunday', time: 'Closed' },
+	{ days: 'Sun — Mon', time: 'Closed' },
+	{ days: 'Tues — Fri', time: '9:00a — 5:00p' },
+	{ days: 'Saturday', time: '9:00a — 3:00p' },
 ];
 ---
 
@@ -31,7 +31,7 @@ const hours = [
 		</dl>
 
 		<p class="mt-6 font-mono text-xs leading-relaxed text-starlight/60">
-			Appointment only? Walk-ins?
+			By appointment only — grab a slot online.
 		</p>
 		<a
 			href={site.bookingUrl}
