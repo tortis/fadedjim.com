@@ -32,7 +32,18 @@ All Jim-editable content lives in **`src/data/data.json`**, imported directly by
 
 ## Admin
 
-`src/pages/admin.astro` (`/admin`, noindexed, not linked) is a static form pre-filled from `data.json`. It supports add/remove rows for hours/reviews/cuts and resizes selected photos client-side (canvas, max 1600px JPEG q85). The Save button currently validates and logs a `data.json`-shaped payload + resized image blobs to the console — a publish endpoint (commit to GitHub) is planned but not built yet.
+`src/pages/admin.astro` (`/admin`, noindexed, not linked) is a static form pre-filled from `data.json`. It supports add/remove rows for hours/reviews/cuts and resizes selected photos client-side (canvas, max 1600px JPEG q85). Save & Publish POSTs multipart form data (password, JSON payload, image files) to the publish endpoint. New uploads get unique timestamped filenames (`cut-<ts>-<n>.jpg`) so they never collide with existing files; after a successful publish the form marks them as committed so re-saving doesn't re-upload.
+
+### Publish endpoint
+
+`functions/api/publish.ts` is a Cloudflare Pages Function (deployed automatically with the static `dist/` output; no Astro adapter needed). It checks a shared password, validates the payload, and commits `src/data/data.json` + any uploaded images to `tortis/fadedjim.com@main` in one atomic commit via the GitHub Git Data API (blobs → tree → commit → ref update), pruning unreferenced `cut-*` images. The push triggers the Cloudflare Pages rebuild.
+
+Required env vars (set in the Cloudflare Pages project settings for Production):
+
+- `GITHUB_TOKEN` — fine-grained PAT scoped to the repo, Contents: read/write
+- `ADMIN_PASSWORD` — shared secret Jim types into the form
+
+Local testing: `./node_modules/.bin/astro build`, then `wrangler pages dev dist --compatibility-date 2026-08-08` with secrets in `.dev.vars` (gitignored). The plain `astro dev` server does not serve the function. Type-check the function with `tsc -p functions/tsconfig.json`.
 
 ## Screenshots
 

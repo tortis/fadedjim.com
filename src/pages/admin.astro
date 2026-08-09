@@ -26,7 +26,7 @@ const fileCls =
 	<main id="main" class="mx-auto max-w-3xl px-5 py-12 sm:py-16">
 		<h1 class="font-display text-4xl text-coral sm:text-5xl">Site Content</h1>
 		<p class="mt-2 font-mono text-xs text-starlight/50">
-			fadedjim.com admin — changes are validated locally; publishing is not connected yet.
+			fadedjim.com admin — edits publish straight to the live site (about a minute to go live).
 		</p>
 
 		<form id="content-form" class="mt-10 space-y-8" novalidate>
@@ -188,11 +188,21 @@ const fileCls =
 				</div>
 			</section>
 
-			<!-- Save -->
-			<div class="border-2 border-coral/60 bg-night-deep p-6">
-				<button type="submit" class="btn text-lg">Save &amp; Publish</button>
-				<p id="form-status" class="mt-4 font-mono text-xs leading-relaxed text-starlight/60"></p>
-			</div>
+		<!-- Save -->
+		<div class="border-2 border-coral/60 bg-night-deep p-6">
+			<label class={`${labelCls} mb-6 max-w-xs`}>
+				Admin password
+				<input
+					id="admin-password"
+					type="password"
+					autocomplete="current-password"
+					required
+					class={inputCls}
+				/>
+			</label>
+			<button type="submit" id="publish-btn" class="btn text-lg">Save &amp; Publish</button>
+			<p id="form-status" class="mt-4 font-mono text-xs leading-relaxed text-starlight/60"></p>
+		</div>
 		</form>
 
 		<!-- Row templates for client-side add -->
@@ -332,7 +342,11 @@ const fileCls =
 	});
 
 	function buildPayload() {
-		return {
+		// Unique names for new uploads so they can never collide with existing files.
+		const stamp = Date.now();
+		let counter = 0;
+		const fileNames = new Map<string, string>(); // image-holder uid → committed filename
+		const payload = {
 			links: {
 				booking_url: val(form, 'links.booking_url'),
 				instagram_handle: val(form, 'links.instagram_handle'),
@@ -347,14 +361,21 @@ const fileCls =
 			},
 			hours: rows('hours-rows').map((r) => ({ days: val(r, 'days'), time: val(r, 'time') })),
 			reviews: rows('reviews-rows').map((r) => ({ quote: val(r, 'quote'), name: val(r, 'name') })),
-			cuts: rows('cuts-rows').map((r, i) => ({
-				image: pending.has(r.dataset.uid!) ? `cut-${i + 1}.jpg` : r.dataset.existingImage!,
-				alt: val(r, 'alt'),
-			})),
+			cuts: rows('cuts-rows').map((r) => {
+				const uid = r.dataset.uid!;
+				let image = r.dataset.existingImage!;
+				if (pending.has(uid)) {
+					image = `cut-${stamp}-${counter++}.jpg`;
+					fileNames.set(uid, image);
+				}
+				return { image, alt: val(r, 'alt') };
+			}),
 		};
+		if (pending.has('jim')) fileNames.set('jim', 'jim.jpg');
+		return { payload, fileNames };
 	}
 
-	form.addEventListener('submit', (e) => {
+	form.addEventListener('submit', async (e) => {
 		e.preventDefault();
 		if (!form.reportValidity()) return;
 
@@ -377,13 +398,41 @@ const fileCls =
 			return;
 		}
 
-		const payload = buildPayload();
-		const imageSummary = [...pending.entries()].map(
-			([key, blob]) => `${key}: ${Math.round(blob.size / 1024)} KB`,
-		);
-		console.log('[admin] data.json payload:', payload);
-		console.log('[admin] resized images ready:', imageSummary);
+		const { payload, fileNames } = buildPayload();
+		const body = new FormData();
+		body.set('password', (document.getElementById('admin-password') as HTMLInputElement).value);
+		body.set('data', JSON.stringify(payload));
+		for (const [uid, name] of fileNames) body.append('files', pending.get(uid)!, name);
+
+		const publishBtn = document.getElementById('publish-btn') as HTMLButtonElement;
+		publishBtn.disabled = true;
 		statusEl.classList.remove('text-ember');
-		statusEl.textContent = `Validated ✓ (${pending.size} image${pending.size === 1 ? '' : 's'} ready). Publishing is not connected yet — payload logged to the browser console.`;
+		statusEl.textContent = 'Publishing…';
+		try {
+			const res = await fetch('/api/publish', { method: 'POST', body });
+			const result = await res.json().catch(() => ({}));
+			if (!res.ok) throw new Error(result.error || `Request failed (HTTP ${res.status}).`);
+
+			// Mark uploads as committed so saving again doesn't re-upload them.
+			for (const [uid, name] of fileNames) {
+				const holder = form.querySelector<HTMLElement>(`[data-image-holder][data-uid="${uid}"]`);
+				if (holder) holder.dataset.existingImage = name;
+				pending.delete(uid);
+			}
+
+			statusEl.textContent = 'Published ✓ — the live site will update in about a minute. ';
+			const link = document.createElement('a');
+			link.href = result.commitUrl;
+			link.target = '_blank';
+			link.rel = 'noopener';
+			link.textContent = 'View commit';
+			link.className = 'text-coral underline underline-offset-4';
+			statusEl.appendChild(link);
+		} catch (err) {
+			statusEl.classList.add('text-ember');
+			statusEl.textContent = err instanceof Error ? err.message : String(err);
+		} finally {
+			publishBtn.disabled = false;
+		}
 	});
 </script>
