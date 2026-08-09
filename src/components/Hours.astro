@@ -1,11 +1,8 @@
 ---
 import { site } from '../site';
+import data from '../data/data.json';
 
-const hours = [
-	{ days: 'Sun — Mon', time: 'Closed' },
-	{ days: 'Tues — Fri', time: '9:00a — 5:00p' },
-	{ days: 'Saturday', time: '9:00a — 3:00p' },
-];
+const { hours, copy } = data;
 ---
 
 <section id="hours" class="mx-auto max-w-3xl scroll-mt-24 px-5 py-20 sm:py-28">
@@ -31,7 +28,7 @@ const hours = [
 		</dl>
 
 		<p class="mt-6 font-mono text-xs leading-relaxed text-starlight/60">
-			By appointment only — grab a slot online.
+			{copy.hours_note}
 		</p>
 		<a
 			href={site.bookingUrl}

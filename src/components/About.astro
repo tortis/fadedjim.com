@@ -1,14 +1,21 @@
 ---
 import { Image } from 'astro:assets';
 import { site } from '../site';
-import jimPortrait from '../assets/jim-portrait.jpg';
+import data from '../data/data.json';
+
+const { copy } = data;
+
+const images = import.meta.glob<{ default: ImageMetadata }>('../data/images/*.{jpg,jpeg,png}', {
+	eager: true,
+});
+const jimImage = images['../data/images/jim.jpg']!.default;
 ---
 
 <section id="about" class="mx-auto max-w-6xl scroll-mt-24 px-5 py-20 sm:py-28">
 	<div class="grid items-center gap-12 md:grid-cols-2">
 		<div class="reveal polaroid relative mx-auto w-full max-w-md -rotate-2 border-8 border-starlight bg-starlight shadow-xl">
 			<Image
-				src={jimPortrait}
+				src={jimImage}
 				alt="Jim cutting a client's hair at Annex Barber Shop"
 				widths={[450, 900]}
 				sizes="(min-width: 768px) 448px, calc(100vw - 2.5rem)"
@@ -24,10 +31,10 @@ import jimPortrait from '../assets/jim-portrait.jpg';
 				Meet Jim
 			</h2>
 			<p class="mt-6 leading-relaxed font-light text-starlight/85">
-				I'm Jim, I've been cutting hair for ten years and am located at Annex Barber Shop in the Paseo district of Oklahoma City. My chair is a place where people feel comfortable and have a good time while getting the best service possible. I value your time and my own and am always committed to giving you the best cut for you.
+				{copy.about_paragraph_1}
 			</p>
 			<p class="mt-4 leading-relaxed font-light text-starlight/85">
-				When I'm not cutting you can usually find me reading books or watching movies. Come in and chat with me about Stephen King, Margaret Atwood, or anything horror. Let's be friends — book a cut or a hot towel shave today!
+				{copy.about_paragraph_2}
 			</p>
 			<a
 				href={site.instagram.url}

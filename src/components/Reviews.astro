@@ -1,25 +1,9 @@
 ---
-// Placeholder reviews — swap for real Google reviews
-const reviews = [
-	{
-		quote:
-			'My last cut was with Jim, and let me just say, this dude knows hair. He not only provided excellent styling tips, he also helped lay the blueprint for the style I wanted to grow into. Super rad guy, get on his books!',
-		name: 'Joshua C.',
-		rotate: 'md:-rotate-1',
-	},
-	{
-		quote:
-			'Jim does a great job! Been multiple times and going to keep coming back. Awesome haircuts and great conversation too. Recommend to anybody!',
-		name: 'Josh S.',
-		rotate: 'md:rotate-1',
-	},
-	{
-		quote:
-			'Awesome service, incredible haircut.  My son was very happy with his hair.  Jim was very helpful in suggesting product and the proper hair tool.  Highly recommend.',
-		name: 'Amanda C.',
-		rotate: 'md:-rotate-2',
-	},
-];
+import data from '../data/data.json';
+
+const { reviews } = data;
+
+const rotations = ['md:-rotate-1', 'md:rotate-1', 'md:-rotate-2'];
 ---
 
 <section id="reviews" class="mx-auto max-w-6xl scroll-mt-24 px-5 py-20 sm:py-28">
@@ -33,9 +17,9 @@ const reviews = [
 
 	<div class="grid gap-6 md:grid-cols-3">
 		{
-			reviews.map((review) => (
+			reviews.map((review, i) => (
 				<blockquote
-					class={`reveal relative border-t-4 border-coral bg-dusk/40 p-6 pt-8 shadow-lg ${review.rotate}`}
+					class={`reveal relative border-t-4 border-coral bg-dusk/40 p-6 pt-8 shadow-lg ${rotations[i % rotations.length]}`}
 				>
 					<span
 						class="absolute -top-1 left-4 font-display text-6xl text-coral/40 select-none"

@@ -1,6 +1,9 @@
 ---
 import { site } from '../site';
+import data from '../data/data.json';
 import Scissors from './Scissors.astro';
+
+const { copy } = data;
 ---
 
 <section
@@ -39,7 +42,7 @@ import Scissors from './Scissors.astro';
 		<p
 			class="reveal mt-6 flex items-center gap-2 font-mono text-xs uppercase tracking-[0.35em] text-blush sm:text-sm"
 		>
-			<Scissors class="size-4 text-coral" /> Jim Maguffin - Barber
+			<Scissors class="size-4 text-coral" /> {copy.hero_subtitle}
 		</p>
 		<a href={site.bookingUrl} class="btn reveal mt-10 text-xl">Book Now</a>
 		<a

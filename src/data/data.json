@@ -1,0 +1,39 @@
+{
+	"links": {
+		"booking_url": "https://app.acuityscheduling.com/schedule.php?owner=11284108&calendarID=12092637",
+		"instagram_handle": "@faded_jim",
+		"instagram_url": "https://instagram.com/faded_jim"
+	},
+	"copy": {
+		"hero_subtitle": "Jim Maguffin - Barber",
+		"about_paragraph_1": "I'm Jim, I've been cutting hair for ten years and am located at Annex Barber Shop in the Paseo district of Oklahoma City. My chair is a place where people feel comfortable and have a good time while getting the best service possible. I value your time and my own and am always committed to giving you the best cut for you.",
+		"about_paragraph_2": "When I'm not cutting you can usually find me reading books or watching movies. Come in and chat with me about Stephen King, Margaret Atwood, or anything horror. Let's be friends — book a cut or a hot towel shave today!",
+		"hours_note": "By appointment only — grab a slot online.",
+		"footer_follow_line": "Stay up to date by following me here"
+	},
+	"hours": [
+		{ "days": "Sun — Mon", "time": "Closed" },
+		{ "days": "Tues — Fri", "time": "9:00a — 5:00p" },
+		{ "days": "Saturday", "time": "9:00a — 3:00p" }
+	],
+	"reviews": [
+		{
+			"quote": "My last cut was with Jim, and let me just say, this dude knows hair. He not only provided excellent styling tips, he also helped lay the blueprint for the style I wanted to grow into. Super rad guy, get on his books!",
+			"name": "Joshua C."
+		},
+		{
+			"quote": "Jim does a great job! Been multiple times and going to keep coming back. Awesome haircuts and great conversation too. Recommend to anybody!",
+			"name": "Josh S."
+		},
+		{
+			"quote": "Awesome service, incredible haircut.  My son was very happy with his hair.  Jim was very helpful in suggesting product and the proper hair tool.  Highly recommend.",
+			"name": "Amanda C."
+		}
+	],
+	"cuts": [
+		{ "image": "cut-1.jpg", "alt": "Side part" },
+		{ "image": "cut-2.jpg", "alt": "Classic cut + beard" },
+		{ "image": "cut-3.jpg", "alt": "Taper" },
+		{ "image": "cut-4.jpg", "alt": "Skin fade" }
+	]
+}

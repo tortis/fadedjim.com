@@ -1,0 +1,389 @@
+---
+import Layout from '../layouts/Layout.astro';
+import data from '../data/data.json';
+
+const images = import.meta.glob<{ default: ImageMetadata }>('../data/images/*.{jpg,jpeg,png}', {
+	eager: true,
+});
+const imageSrc = (name: string) => images[`../data/images/${name}`]?.default.src ?? '';
+
+const inputCls =
+	'mt-1 w-full rounded border border-starlight/20 bg-night-deep px-3 py-2 font-mono text-sm text-starlight placeholder:text-starlight/30 focus:border-coral focus:outline-none';
+const labelCls = 'block font-mono text-xs uppercase tracking-[0.2em] text-starlight/60';
+const sectionCls = 'border-2 border-dashed border-coral/40 bg-night-deep/60 p-6 sm:p-8';
+const h2Cls = 'font-display text-2xl text-coral';
+const removeCls =
+	'shrink-0 self-end font-mono text-xs uppercase tracking-wider text-starlight/40 underline-offset-4 hover:text-ember hover:underline';
+const addCls =
+	'mt-4 inline-block font-mono text-xs uppercase tracking-[0.2em] text-coral underline decoration-coral/40 underline-offset-8 hover:text-blush';
+const fileCls =
+	'mt-1 block font-mono text-xs text-starlight/60 file:mr-3 file:rounded file:border-0 file:bg-coral file:px-3 file:py-1.5 file:font-mono file:text-xs file:uppercase file:tracking-wider file:text-night-deep hover:file:bg-ember';
+---
+
+<Layout title="Admin — Faded Jim">
+	<meta slot="head" name="robots" content="noindex" />
+
+	<main id="main" class="mx-auto max-w-3xl px-5 py-12 sm:py-16">
+		<h1 class="font-display text-4xl text-coral sm:text-5xl">Site Content</h1>
+		<p class="mt-2 font-mono text-xs text-starlight/50">
+			fadedjim.com admin — changes are validated locally; publishing is not connected yet.
+		</p>
+
+		<form id="content-form" class="mt-10 space-y-8" novalidate>
+			<!-- Links -->
+			<section class={sectionCls}>
+				<h2 class={h2Cls}>Links</h2>
+				<div class="mt-5 space-y-4">
+					<label class={labelCls}>
+						Booking URL
+						<input name="links.booking_url" value={data.links.booking_url} required class={inputCls} />
+					</label>
+					<label class={labelCls}>
+						Instagram handle
+						<input name="links.instagram_handle" value={data.links.instagram_handle} required class={inputCls} />
+					</label>
+					<label class={labelCls}>
+						Instagram URL
+						<input name="links.instagram_url" value={data.links.instagram_url} required class={inputCls} />
+					</label>
+				</div>
+			</section>
+
+			<!-- Copy -->
+			<section class={sectionCls}>
+				<h2 class={h2Cls}>Copy</h2>
+				<div class="mt-5 space-y-4">
+					<label class={labelCls}>
+						Hero subtitle
+						<input name="copy.hero_subtitle" value={data.copy.hero_subtitle} required class={inputCls} />
+					</label>
+					<label class={labelCls}>
+						About — paragraph 1
+						<textarea name="copy.about_paragraph_1" rows="4" required class={inputCls}>{data.copy.about_paragraph_1}</textarea>
+					</label>
+					<label class={labelCls}>
+						About — paragraph 2
+						<textarea name="copy.about_paragraph_2" rows="4" required class={inputCls}>{data.copy.about_paragraph_2}</textarea>
+					</label>
+					<label class={labelCls}>
+						Hours note
+						<input name="copy.hours_note" value={data.copy.hours_note} required class={inputCls} />
+					</label>
+					<label class={labelCls}>
+						Footer follow line
+						<input name="copy.footer_follow_line" value={data.copy.footer_follow_line} required class={inputCls} />
+					</label>
+				</div>
+			</section>
+
+			<!-- Hours -->
+			<section class={sectionCls}>
+				<h2 class={h2Cls}>Hours</h2>
+				<div id="hours-rows" class="mt-5 space-y-3">
+					{
+						data.hours.map((row) => (
+							<div class="flex items-end gap-3" data-row>
+								<label class={`${labelCls} flex-1`}>
+									Days
+									<input name="days" value={row.days} required class={inputCls} />
+								</label>
+								<label class={`${labelCls} flex-1`}>
+									Time
+									<input name="time" value={row.time} required class={inputCls} />
+								</label>
+								<button type="button" class={removeCls} data-remove>Remove</button>
+							</div>
+						))
+					}
+				</div>
+				<button type="button" class={addCls} data-add="hours">+ Add row</button>
+			</section>
+
+			<!-- Reviews -->
+			<section class={sectionCls}>
+				<h2 class={h2Cls}>Reviews</h2>
+				<div id="reviews-rows" class="mt-5 space-y-5">
+					{
+						data.reviews.map((review) => (
+							<div class="space-y-3 border-b border-starlight/10 pb-5" data-row>
+								<label class={labelCls}>
+									Quote
+									<textarea name="quote" rows="3" required class={inputCls}>{review.quote}</textarea>
+								</label>
+								<div class="flex items-end gap-3">
+									<label class={`${labelCls} flex-1`}>
+										Name
+										<input name="name" value={review.name} required class={inputCls} />
+									</label>
+									<button type="button" class={removeCls} data-remove>Remove</button>
+								</div>
+							</div>
+						))
+					}
+				</div>
+				<button type="button" class={addCls} data-add="reviews">+ Add review</button>
+			</section>
+
+			<!-- Cuts -->
+			<section class={sectionCls}>
+				<h2 class={h2Cls}>The Cuts</h2>
+				<div id="cuts-rows" class="mt-5 space-y-5">
+					{
+						data.cuts.map((cut, i) => (
+							<div
+								class="flex flex-wrap items-end gap-4 border-b border-starlight/10 pb-5"
+								data-row
+								data-uid={`cut-${i}`}
+								data-existing-image={cut.image}
+								data-image-holder
+							>
+								<img
+									src={imageSrc(cut.image)}
+									alt={cut.alt}
+									class="h-32 w-28 shrink-0 border-4 border-starlight object-cover"
+									data-preview
+								/>
+								<div class="min-w-48 flex-1 space-y-3">
+									<label class={labelCls}>
+										Alt text
+										<input name="alt" value={cut.alt} required class={inputCls} />
+									</label>
+									<label class={labelCls}>
+										Replace photo
+										<input type="file" accept="image/*" class={fileCls} data-image-input />
+									</label>
+									<p class="font-mono text-xs text-starlight/40" data-image-status></p>
+								</div>
+								<button type="button" class={removeCls} data-remove>Remove</button>
+							</div>
+						))
+					}
+				</div>
+				<button type="button" class={addCls} data-add="cuts">+ Add cut</button>
+			</section>
+
+			<!-- Portrait -->
+			<section class={sectionCls}>
+				<h2 class={h2Cls}>Jim's Portrait</h2>
+				<div
+					id="portrait"
+					class="mt-5 flex flex-wrap items-end gap-4"
+					data-uid="jim"
+					data-existing-image="jim.jpg"
+					data-image-holder
+				>
+					<img
+						src={imageSrc('jim.jpg')}
+						alt="Jim"
+						class="h-32 w-40 shrink-0 border-4 border-starlight object-cover"
+						data-preview
+					/>
+					<div class="min-w-48 flex-1">
+						<label class={labelCls}>
+							Replace photo
+							<input type="file" accept="image/*" class={fileCls} data-image-input />
+						</label>
+						<p class="mt-2 font-mono text-xs text-starlight/40" data-image-status></p>
+					</div>
+				</div>
+			</section>
+
+			<!-- Save -->
+			<div class="border-2 border-coral/60 bg-night-deep p-6">
+				<button type="submit" class="btn text-lg">Save &amp; Publish</button>
+				<p id="form-status" class="mt-4 font-mono text-xs leading-relaxed text-starlight/60"></p>
+			</div>
+		</form>
+
+		<!-- Row templates for client-side add -->
+		<template id="tpl-hours">
+			<div class="flex items-end gap-3" data-row>
+				<label class={`${labelCls} flex-1`}>
+					Days
+					<input name="days" required class={inputCls} />
+				</label>
+				<label class={`${labelCls} flex-1`}>
+					Time
+					<input name="time" required class={inputCls} />
+				</label>
+				<button type="button" class={removeCls} data-remove>Remove</button>
+			</div>
+		</template>
+		<template id="tpl-reviews">
+			<div class="space-y-3 border-b border-starlight/10 pb-5" data-row>
+				<label class={labelCls}>
+					Quote
+					<textarea name="quote" rows="3" required class={inputCls}></textarea>
+				</label>
+				<div class="flex items-end gap-3">
+					<label class={`${labelCls} flex-1`}>
+						Name
+						<input name="name" required class={inputCls} />
+					</label>
+					<button type="button" class={removeCls} data-remove>Remove</button>
+				</div>
+			</div>
+		</template>
+		<template id="tpl-cuts">
+			<div
+				class="flex flex-wrap items-end gap-4 border-b border-starlight/10 pb-5"
+				data-row
+				data-image-holder
+			>
+				<div
+					class="flex h-32 w-28 shrink-0 items-center justify-center border-4 border-dashed border-starlight/30 font-mono text-xs text-starlight/40"
+					data-preview-placeholder
+				>
+					No photo
+				</div>
+				<img class="hidden h-32 w-28 shrink-0 border-4 border-starlight object-cover" data-preview />
+				<div class="min-w-48 flex-1 space-y-3">
+					<label class={labelCls}>
+						Alt text
+						<input name="alt" required class={inputCls} />
+					</label>
+					<label class={labelCls}>
+						Photo
+						<input type="file" accept="image/*" class={fileCls} data-image-input />
+					</label>
+					<p class="font-mono text-xs text-starlight/40" data-image-status></p>
+				</div>
+				<button type="button" class={removeCls} data-remove>Remove</button>
+			</div>
+		</template>
+	</main>
+</Layout>
+
+<script>
+	const form = document.getElementById('content-form') as HTMLFormElement;
+	const statusEl = document.getElementById('form-status')!;
+	const pending = new Map<string, Blob>(); // image-holder uid → resized JPEG
+	let uidCounter = 0;
+
+	const val = (scope: ParentNode, name: string) =>
+		(
+			scope.querySelector(`[name="${name}"]`) as HTMLInputElement | HTMLTextAreaElement
+		).value.trim();
+	const rows = (id: string) => [
+		...document.querySelectorAll<HTMLElement>(`#${id} [data-row]`),
+	];
+
+	async function resizeImage(file: File): Promise<Blob> {
+		const bitmap = await createImageBitmap(file);
+		const scale = Math.min(1, 1600 / bitmap.width);
+		const canvas = document.createElement('canvas');
+		canvas.width = Math.round(bitmap.width * scale);
+		canvas.height = Math.round(bitmap.height * scale);
+		canvas.getContext('2d')!.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
+		bitmap.close();
+		return new Promise((resolve, reject) =>
+			canvas.toBlob(
+				(b) => (b ? resolve(b) : reject(new Error('encode failed'))),
+				'image/jpeg',
+				0.85,
+			),
+		);
+	}
+
+	// Add row from template
+	document.querySelectorAll<HTMLButtonElement>('[data-add]').forEach((btn) => {
+		btn.addEventListener('click', () => {
+			const tpl = document.getElementById(`tpl-${btn.dataset.add}`) as HTMLTemplateElement;
+			const row = tpl.content.firstElementChild!.cloneNode(true) as HTMLElement;
+			if (btn.dataset.add === 'cuts') row.dataset.uid = `new-${uidCounter++}`;
+			document.getElementById(`${btn.dataset.add}-rows`)!.appendChild(row);
+		});
+	});
+
+	// Remove row (delegated)
+	form.addEventListener('click', (e) => {
+		const btn = (e.target as HTMLElement).closest<HTMLElement>('[data-remove]');
+		if (!btn) return;
+		const row = btn.closest<HTMLElement>('[data-row]')!;
+		if (row.dataset.uid) pending.delete(row.dataset.uid);
+		row.remove();
+	});
+
+	// Image selection → resize → preview (delegated)
+	form.addEventListener('change', async (e) => {
+		const input = (e.target as HTMLElement).closest<HTMLInputElement>('[data-image-input]');
+		const file = input?.files?.[0];
+		if (!input || !file) return;
+		const holder = input.closest<HTMLElement>('[data-image-holder]')!;
+		const key = holder.dataset.uid!;
+		const note = holder.querySelector('[data-image-status]')!;
+		const preview = holder.querySelector<HTMLImageElement>('[data-preview]');
+		const placeholder = holder.querySelector('[data-preview-placeholder]');
+		try {
+			note.textContent = 'Processing…';
+			const blob = await resizeImage(file);
+			pending.set(key, blob);
+			if (preview) {
+				preview.src = URL.createObjectURL(blob);
+				preview.classList.remove('hidden');
+			}
+			placeholder?.classList.add('hidden');
+			note.textContent = `${file.name} → ${Math.round(blob.size / 1024)} KB, ready to publish`;
+		} catch {
+			pending.delete(key);
+			input.value = '';
+			note.textContent = 'Could not read that image — try a JPEG or PNG.';
+		}
+	});
+
+	function buildPayload() {
+		return {
+			links: {
+				booking_url: val(form, 'links.booking_url'),
+				instagram_handle: val(form, 'links.instagram_handle'),
+				instagram_url: val(form, 'links.instagram_url'),
+			},
+			copy: {
+				hero_subtitle: val(form, 'copy.hero_subtitle'),
+				about_paragraph_1: val(form, 'copy.about_paragraph_1'),
+				about_paragraph_2: val(form, 'copy.about_paragraph_2'),
+				hours_note: val(form, 'copy.hours_note'),
+				footer_follow_line: val(form, 'copy.footer_follow_line'),
+			},
+			hours: rows('hours-rows').map((r) => ({ days: val(r, 'days'), time: val(r, 'time') })),
+			reviews: rows('reviews-rows').map((r) => ({ quote: val(r, 'quote'), name: val(r, 'name') })),
+			cuts: rows('cuts-rows').map((r, i) => ({
+				image: pending.has(r.dataset.uid!) ? `cut-${i + 1}.jpg` : r.dataset.existingImage!,
+				alt: val(r, 'alt'),
+			})),
+		};
+	}
+
+	form.addEventListener('submit', (e) => {
+		e.preventDefault();
+		if (!form.reportValidity()) return;
+
+		const problems: string[] = [];
+		if (rows('hours-rows').length < 1) problems.push('Add at least one hours row.');
+		if (rows('reviews-rows').length < 1) problems.push('Add at least one review.');
+		const cuts = rows('cuts-rows');
+		if (cuts.length < 1) problems.push('Add at least one cut photo.');
+		cuts.forEach((r, i) => {
+			if (!r.dataset.existingImage && !pending.has(r.dataset.uid!))
+				problems.push(`Cut #${i + 1} needs a photo.`);
+		});
+		const portrait = document.getElementById('portrait')!;
+		if (!portrait.dataset.existingImage && !pending.has('jim'))
+			problems.push("Jim's portrait photo is missing.");
+
+		if (problems.length > 0) {
+			statusEl.textContent = problems.join(' ');
+			statusEl.classList.add('text-ember');
+			return;
+		}
+
+		const payload = buildPayload();
+		const imageSummary = [...pending.entries()].map(
+			([key, blob]) => `${key}: ${Math.round(blob.size / 1024)} KB`,
+		);
+		console.log('[admin] data.json payload:', payload);
+		console.log('[admin] resized images ready:', imageSummary);
+		statusEl.classList.remove('text-ember');
+		statusEl.textContent = `Validated ✓ (${pending.size} image${pending.size === 1 ? '' : 's'} ready). Publishing is not connected yet — payload logged to the browser console.`;
+	});
+</script>

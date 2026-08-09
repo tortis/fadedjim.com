@@ -1,10 +1,11 @@
+import data from './data/data.json';
+
 export const site = {
 	name: 'Faded Jim',
 	tagline: 'Tell your friends',
 	instagram: {
-		handle: '@faded_jim',
-		url: 'https://instagram.com/faded_jim',
+		handle: data.links.instagram_handle,
+		url: data.links.instagram_url,
 	},
-	bookingUrl:
-		'https://app.acuityscheduling.com/schedule.php?owner=11284108&calendarID=12092637',
+	bookingUrl: data.links.booking_url,
 };

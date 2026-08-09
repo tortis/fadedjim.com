@@ -1,17 +1,15 @@
 ---
 import { Image } from 'astro:assets';
-import cutSidePart from '../assets/cut-side-part.jpg';
-import cutClassicBeard from '../assets/cut-classic-beard.jpg';
-import cutTaper from '../assets/cut-taper.jpg';
-import cutFade from '../assets/cut-fade.jpg';
 import { site } from '../site';
+import data from '../data/data.json';
 
-const cuts = [
-	{ src: cutSidePart, label: 'Side part', rotate: 'lg:-rotate-2' },
-	{ src: cutClassicBeard, label: 'Classic cut + beard', rotate: 'lg:rotate-1' },
-	{ src: cutTaper, label: 'Taper', rotate: 'lg:-rotate-1' },
-	{ src: cutFade, label: 'Skin fade', rotate: 'lg:rotate-2' },
-];
+const { cuts } = data;
+
+const images = import.meta.glob<{ default: ImageMetadata }>('../data/images/*.{jpg,jpeg,png}', {
+	eager: true,
+});
+
+const rotations = ['lg:-rotate-2', 'lg:rotate-1', 'lg:-rotate-1', 'lg:rotate-2'];
 ---
 
 <section id="cuts" class="relative mx-auto max-w-6xl scroll-mt-24 px-5 py-20 sm:py-28">
@@ -20,13 +18,13 @@ const cuts = [
 		class="reveal flex snap-x snap-mandatory gap-6 overflow-x-auto pb-6 lg:grid lg:grid-cols-4 lg:overflow-visible lg:pb-0"
 	>
 		{
-			cuts.map((cut) => (
+			cuts.map((cut, i) => (
 				<div
-					class={`polaroid relative w-72 shrink-0 snap-center border-8 border-starlight bg-starlight shadow-xl lg:w-auto ${cut.rotate}`}
+					class={`polaroid relative w-72 shrink-0 snap-center border-8 border-starlight bg-starlight shadow-xl lg:w-auto ${rotations[i % rotations.length]}`}
 				>
 					<Image
-						src={cut.src}
-						alt={`Haircut by Jim — ${cut.label}`}
+						src={images[`../data/images/${cut.image}`]!.default}
+						alt={`Haircut by Jim — ${cut.alt}`}
 						widths={[300, 600]}
 						sizes="(min-width: 1024px) 270px, 288px"
 						format="webp"
@@ -37,7 +35,6 @@ const cuts = [
 			))
 		}
 	</div>
-
 
 	<p class="reveal mt-4 text-center font-mono text-xs text-starlight/50 lg:hidden">
 		← swipe →

@@ -1,5 +1,8 @@
 ---
 import { site } from '../site';
+import data from '../data/data.json';
+
+const { copy } = data;
 
 const year = new Date().getFullYear();
 ---
@@ -24,7 +27,7 @@ const year = new Date().getFullYear();
 		</h2>
 		<a href={site.bookingUrl} class="btn reveal mt-10 text-2xl">Book Now</a>
 		<p class="reveal mt-12 font-mono text-xs tracking-[0.25em] text-starlight/80 uppercase">
-			Stay up to date by following me here
+			{copy.footer_follow_line}
 		</p>
 		<a
 			href={site.instagram.url}
