@@ -12,9 +12,18 @@
 		"footer_follow_line": "Stay up to date by following me here"
 	},
 	"hours": [
-		{ "days": "Sun — Mon", "time": "Closed" },
-		{ "days": "Tues — Fri", "time": "9:00a — 5:00p" },
-		{ "days": "Saturday", "time": "9:00a — 3:00p" }
+		{
+			"days": "Sun — Mon",
+			"time": "Closed"
+		},
+		{
+			"days": "Tues — Fri",
+			"time": "9:00a — 5:00p"
+		},
+		{
+			"days": "Saturday",
+			"time": "9:00a — 3:00p"
+		}
 	],
 	"reviews": [
 		{
@@ -31,9 +40,21 @@
 		}
 	],
 	"cuts": [
-		{ "image": "cut-1.jpg", "alt": "Side part" },
-		{ "image": "cut-2.jpg", "alt": "Classic cut + beard" },
-		{ "image": "cut-3.jpg", "alt": "Taper" },
-		{ "image": "cut-4.jpg", "alt": "Skin fade" }
+		{
+			"image": "cut-1.jpg",
+			"alt": "Side part"
+		},
+		{
+			"image": "cut-2.jpg",
+			"alt": "Classic cut + beard"
+		},
+		{
+			"image": "cut-3.jpg",
+			"alt": "Taper"
+		},
+		{
+			"image": "cut-4.jpg",
+			"alt": "Skin fade"
+		}
 	]
 }
