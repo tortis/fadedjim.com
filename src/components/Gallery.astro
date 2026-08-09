@@ -4,6 +4,7 @@ import cutSidePart from '../assets/cut-side-part.jpg';
 import cutClassicBeard from '../assets/cut-classic-beard.jpg';
 import cutTaper from '../assets/cut-taper.jpg';
 import cutFade from '../assets/cut-fade.jpg';
+import { site } from '../site';
 
 const cuts = [
 	{ src: cutSidePart, label: 'Side part', rotate: 'lg:-rotate-2' },
@@ -14,18 +15,13 @@ const cuts = [
 ---
 
 <section id="cuts" class="relative mx-auto max-w-6xl scroll-mt-24 px-5 py-20 sm:py-28">
-	<div class="reveal mb-12 text-center">
-		<p class="font-mono text-xs uppercase tracking-[0.35em] text-coral">The proof</p>
-		<h2 class="mt-3 font-display text-5xl text-starlight sm:text-6xl">The Cuts</h2>
-	</div>
-
 	<!-- Mobile: snap carousel / Desktop: tilted grid -->
 	<div
 		class="reveal flex snap-x snap-mandatory gap-6 overflow-x-auto pb-6 lg:grid lg:grid-cols-4 lg:overflow-visible lg:pb-0"
 	>
 		{
 			cuts.map((cut) => (
-				<figure
+				<div
 					class={`polaroid relative w-72 shrink-0 snap-center border-8 border-starlight bg-starlight shadow-xl lg:w-auto ${cut.rotate}`}
 				>
 					<Image
@@ -37,15 +33,24 @@ const cuts = [
 						quality={80}
 						class="aspect-[4/5] w-full object-cover"
 					/>
-					<figcaption class="bg-starlight py-3 text-center font-mono text-xs uppercase tracking-[0.2em] text-night">
-						{cut.label}
-					</figcaption>
-				</figure>
+				</div>
 			))
 		}
 	</div>
 
+
 	<p class="reveal mt-4 text-center font-mono text-xs text-starlight/50 lg:hidden">
 		← swipe →
 	</p>
+
+	<div class="flex justify-center">
+	<a
+		href={site.instagram.url}
+		target="_blank"
+		rel="noopener noreferrer"
+		class="mt-6 inline-block font-mono text-xs uppercase tracking-[0.25em] text-coral underline decoration-coral/40 underline-offset-8 transition-colors hover:text-blush"
+	>
+		See more on Instagram →
+	</a>
+	</div>
 </section>
