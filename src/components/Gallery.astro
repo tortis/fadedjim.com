@@ -3,20 +3,6 @@ import { Image } from 'astro:assets';
 import { site } from '../site';
 import data from '../data/data.json';
 
-interface Props {
-	/** Frame style class applied to each photo card. Defaults to the original polaroid look. */
-	frameClass?: string;
-}
-
-const POLAROID = 'polaroid border-8 border-starlight bg-starlight shadow-xl';
-const { frameClass = POLAROID } = Astro.props;
-const isPolaroid = frameClass === POLAROID;
-
-/* Tilts only apply to the polaroid treatment */
-const rotations = isPolaroid
-	? ['lg:-rotate-2', 'lg:rotate-1', 'lg:-rotate-1', 'lg:rotate-2']
-	: [''];
-
 const { cuts } = data;
 
 const images = import.meta.glob<{ default: ImageMetadata }>('../data/images/*.{jpg,jpeg,png}', {
@@ -26,15 +12,13 @@ const images = import.meta.glob<{ default: ImageMetadata }>('../data/images/*.{j
 ---
 
 <section id="cuts" class="relative mx-auto max-w-6xl scroll-mt-24 px-5 py-20 sm:py-28">
-	<!-- Mobile: snap carousel / Desktop: tilted grid -->
+	<!-- Mobile: snap carousel / Desktop: grid. Frame style: .cut-frame in global.css -->
 	<div
 		class="reveal flex snap-x snap-mandatory gap-6 overflow-x-auto pb-6 lg:grid lg:grid-cols-4 lg:overflow-visible lg:pb-0"
 	>
 		{
-			cuts.map((cut, i) => (
-				<div
-					class={`${frameClass} relative w-72 shrink-0 snap-center lg:w-auto ${rotations[i % rotations.length]}`}
-				>
+			cuts.map((cut) => (
+				<div class="cut-frame relative w-72 shrink-0 snap-center lg:w-auto">
 					<Image
 						src={images[`../data/images/${cut.image}`]!.default}
 						alt={`Haircut by Jim — ${cut.alt}`}
