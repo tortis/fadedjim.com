@@ -3,13 +3,26 @@ import { Image } from 'astro:assets';
 import { site } from '../site';
 import data from '../data/data.json';
 
+interface Props {
+	/** Frame style class applied to each photo card. Defaults to the original polaroid look. */
+	frameClass?: string;
+}
+
+const POLAROID = 'polaroid border-8 border-starlight bg-starlight shadow-xl';
+const { frameClass = POLAROID } = Astro.props;
+const isPolaroid = frameClass === POLAROID;
+
+/* Tilts only apply to the polaroid treatment */
+const rotations = isPolaroid
+	? ['lg:-rotate-2', 'lg:rotate-1', 'lg:-rotate-1', 'lg:rotate-2']
+	: [''];
+
 const { cuts } = data;
 
 const images = import.meta.glob<{ default: ImageMetadata }>('../data/images/*.{jpg,jpeg,png}', {
 	eager: true,
 });
 
-const rotations = ['lg:-rotate-2', 'lg:rotate-1', 'lg:-rotate-1', 'lg:rotate-2'];
 ---
 
 <section id="cuts" class="relative mx-auto max-w-6xl scroll-mt-24 px-5 py-20 sm:py-28">
@@ -20,7 +33,7 @@ const rotations = ['lg:-rotate-2', 'lg:rotate-1', 'lg:-rotate-1', 'lg:rotate-2']
 		{
 			cuts.map((cut, i) => (
 				<div
-					class={`polaroid relative w-72 shrink-0 snap-center border-8 border-starlight bg-starlight shadow-xl lg:w-auto ${rotations[i % rotations.length]}`}
+					class={`${frameClass} relative w-72 shrink-0 snap-center lg:w-auto ${rotations[i % rotations.length]}`}
 				>
 					<Image
 						src={images[`../data/images/${cut.image}`]!.default}

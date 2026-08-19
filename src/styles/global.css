@@ -180,6 +180,136 @@ body {
 	translate: 0 0;
 }
 
+/* ---- Cut frame variants (gallery experiments) ---- */
+/* B — thin black border only */
+.cut-b {
+	border: 2px solid #000;
+	transition:
+		transform 0.25s ease,
+		border-color 0.25s ease;
+}
+.cut-b img {
+	display: block;
+}
+.cut-b:hover {
+	transform: translateY(-4px);
+}
+
+/* C — thick black mat, no light rule */
+.cut-c {
+	border: 10px solid #000;
+	background: #000;
+	transition: transform 0.25s ease;
+}
+.cut-c img {
+	display: block;
+}
+.cut-c:hover {
+	transform: translateY(-4px);
+}
+
+/* D — coral hairline flush to photo */
+.cut-d {
+	border: 1px solid var(--color-coral);
+	transition:
+		transform 0.25s ease,
+		box-shadow 0.25s ease;
+}
+.cut-d img {
+	display: block;
+}
+.cut-d:hover {
+	transform: translateY(-4px);
+	box-shadow: 0 0 0 4px rgba(224, 101, 95, 0.15);
+}
+
+/* E — double rule: black mat with inset light hairline */
+.cut-e {
+	border: 8px solid #000;
+	background: #000;
+	box-shadow:
+		inset 0 0 0 1px rgba(244, 233, 226, 0.25),
+		0 14px 34px -16px rgba(0, 0, 0, 0.9);
+	transition: transform 0.25s ease;
+}
+.cut-e img {
+	display: block;
+}
+.cut-e:hover {
+	transform: translateY(-4px);
+}
+
+/* F — borderless, soft rounded corners + deep shadow */
+.cut-f {
+	border-radius: 0.5rem;
+	overflow: hidden;
+	box-shadow: 0 18px 40px -16px rgba(0, 0, 0, 0.95);
+	transition:
+		transform 0.25s ease,
+		box-shadow 0.25s ease;
+}
+.cut-f img {
+	display: block;
+}
+.cut-f:hover {
+	transform: translateY(-4px);
+	box-shadow: 0 26px 55px -18px rgba(0, 0, 0, 1);
+}
+
+/* G — no frame at all, plain edge-to-edge photos */
+.cut-g img {
+	display: block;
+}
+.cut-g {
+	transition: transform 0.25s ease;
+}
+.cut-g:hover {
+	transform: translateY(-4px);
+}
+
+.cut-b.reveal,
+.cut-c.reveal,
+.cut-d.reveal,
+.cut-e.reveal,
+.cut-f.reveal,
+.cut-g.reveal {
+	transition:
+		transform 0.25s ease,
+		box-shadow 0.25s ease,
+		opacity 0.7s ease,
+		translate 0.7s ease;
+}
+
+/* A — dark matte + hairline inner rule (current default) ---- */
+.cut-frame {
+	background: var(--color-night-deep);
+	border: 1px solid rgba(244, 233, 226, 0.12);
+	padding: 0.5rem;
+	box-shadow: 0 12px 30px -14px rgba(0, 0, 0, 0.8);
+	transition:
+		transform 0.25s ease,
+		border-color 0.25s ease,
+		box-shadow 0.25s ease;
+}
+.cut-frame img {
+	display: block;
+	outline: 1px solid rgba(244, 233, 226, 0.1);
+	outline-offset: -1px;
+}
+.cut-frame:hover {
+	transform: translateY(-4px);
+	border-color: var(--color-coral);
+	box-shadow: 0 22px 45px -14px rgba(0, 0, 0, 0.9);
+}
+.cut-frame.reveal {
+	transition:
+		transform 0.25s ease,
+		border-color 0.25s ease,
+		box-shadow 0.25s ease,
+		opacity 0.7s ease,
+		translate 0.7s ease;
+}
+
 /* ---- Polaroid tilt ---- */
 .polaroid {
 	transition:
