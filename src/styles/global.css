@@ -40,6 +40,62 @@ body {
 	color: var(--color-night-deep);
 }
 
+/* ---- Hero → page fade ----
+   A tall, eased gradient at the bottom of the hero that dissolves the sky
+   photo into the page background so there is no visible section seam.
+   Multiple stops approximate an ease curve; a linear ramp reads as a band. */
+.hero-fade {
+	position: absolute;
+	inset-inline: 0;
+	bottom: -1px; /* hides sub-pixel rounding gap at the section edge */
+	height: min(55vh, 30rem);
+	pointer-events: none;
+	background: linear-gradient(
+		to bottom,
+		color-mix(in srgb, var(--color-night) 0%, transparent) 0%,
+		color-mix(in srgb, var(--color-night) 4%, transparent) 18%,
+		color-mix(in srgb, var(--color-night) 14%, transparent) 34%,
+		color-mix(in srgb, var(--color-night) 30%, transparent) 48%,
+		color-mix(in srgb, var(--color-night) 52%, transparent) 62%,
+		color-mix(in srgb, var(--color-night) 74%, transparent) 74%,
+		color-mix(in srgb, var(--color-night) 90%, transparent) 85%,
+		var(--color-night) 96%
+	);
+}
+
+/* Mirror of .hero-fade for the footer: dissolves the page background down
+   into the footer's sky photo. */
+.footer-fade {
+	position: absolute;
+	inset-inline: 0;
+	top: -1px;
+	height: min(45vh, 26rem);
+	pointer-events: none;
+	z-index: 1;
+	background: linear-gradient(
+		to top,
+		color-mix(in srgb, var(--color-night) 0%, transparent) 0%,
+		color-mix(in srgb, var(--color-night) 4%, transparent) 18%,
+		color-mix(in srgb, var(--color-night) 14%, transparent) 34%,
+		color-mix(in srgb, var(--color-night) 30%, transparent) 48%,
+		color-mix(in srgb, var(--color-night) 52%, transparent) 62%,
+		color-mix(in srgb, var(--color-night) 74%, transparent) 74%,
+		color-mix(in srgb, var(--color-night) 90%, transparent) 85%,
+		var(--color-night) 96%
+	);
+}
+
+/* Fade the film grain out with each sky so the noise doesn't stop at a hard
+   edge where the section begins/ends. */
+#top.grain::after {
+	-webkit-mask-image: linear-gradient(to bottom, black 50%, transparent 94%);
+	mask-image: linear-gradient(to bottom, black 50%, transparent 94%);
+}
+footer.grain::after {
+	-webkit-mask-image: linear-gradient(to top, black 60%, transparent 96%);
+	mask-image: linear-gradient(to top, black 60%, transparent 96%);
+}
+
 /* ---- Twinkling starfield ---- */
 .star {
 	position: absolute;

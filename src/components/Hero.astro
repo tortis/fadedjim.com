@@ -24,7 +24,7 @@ const { copy } = data;
 	>
 	</div>
 	<div
-		class="absolute inset-0 bg-gradient-to-b from-night/60 via-transparent to-night"
+		class="absolute inset-0 bg-gradient-to-b from-night/60 via-transparent to-night/40"
 		aria-hidden="true"
 	>
 	</div>
@@ -32,6 +32,9 @@ const { copy } = data;
 	<!-- Twinkling stars + shooting star (populated by script) -->
 	<div id="starfield" class="absolute inset-0" aria-hidden="true"></div>
 	<div id="shooter" class="shooting-star" style="top: 18%; right: 20%;" aria-hidden="true"></div>
+
+	<!-- Long fade into the page background so the section seam is invisible -->
+	<div class="hero-fade" aria-hidden="true"></div>
 
 	<div class="relative z-10 flex flex-col items-center px-6 text-center">
 		<h1
